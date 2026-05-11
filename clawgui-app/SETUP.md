@@ -1,302 +1,295 @@
-# ClawGUI Android 安装与配置
+# ClawGUI-app Setup Guide
 
-[中文 README](README.md) | [English README](README_EN.md) | [English Setup Guide](SETUP_EN.md)
+[中文 README](README_zh.md) | [English README](README.md) | [中文安装指南](SETUP_zh.md)
 
-本文是 ClawGUI Android 的完整上手指南：从环境要求到 APK 编译/安装、Shizuku 启动、ClawGUI 首次配置、推荐使用流程，以及常见问题。
+This guide covers the complete onboarding path for ClawGUI-app: environment requirements, APK build and installation, Shizuku startup, first-run configuration, recommended usage flow, and common issues.
 
-如果你只想了解 ClawGUI 是什么、能做什么、技术架构是怎样的，请先看 [README.md](README.md)。
+If you only want the project overview and architecture, start with [README.md](README.md).
 
 ---
 
-## 安装与配置
+## 1. Requirements
 
-这一节按“普通用户真正上手”的顺序来写。
+### For developers
 
-### 1. 环境要求
-
-如果你是开发者，需要：
-
-- Android Studio Hedgehog 或更新版本
+- Android Studio Hedgehog or newer
 - JDK 17
 - Android SDK 36
-- 一台 Android 8.0+ 设备
+- An Android 8.0+ device
 
-如果你只是安装使用 APK，需要：
+### For end users installing the APK
 
-- 一台 Android 8.0+ 设备
-- 能联网
-- 能安装 [Shizuku](https://github.com/RikkaApps/Shizuku)
+- An Android 8.0+ device
+- Network access
+- Ability to install [Shizuku](https://github.com/RikkaApps/Shizuku)
 
-### 2. 编译 APK（开发者）
+## 2. Build the APK
 
-在项目根目录准备 `local.properties`：
+Create `local.properties` in the project root:
 
 ```properties
 sdk.dir=/path/to/Android/Sdk
 ```
 
-然后编译：
+Build:
 
 ```bash
 ./gradlew assembleDebug
 ```
 
-APK 输出位置：
+APK output:
 
 ```text
 app/build/outputs/apk/debug/app-debug.apk
 ```
 
-安装：
+Install:
 
 ```bash
 adb install app/build/outputs/apk/debug/app-debug.apk
 ```
 
-### 3. 安装用户侧 App
+## 3. Install the Required Apps
 
-用户侧至少需要安装两个 App：
+Users need at least:
 
 1. **ClawGUI**
 2. **Shizuku**
 
-Shizuku 是 ClawGUI 执行 GUI 自动化的前提。没有它，App 可以聊天，但无法稳定执行点击、滑动、输入等设备操作。
+Shizuku is required for reliable GUI automation. Without it, the app can still chat, but device actions such as tap, swipe, and type will not work reliably.
 
-### 4. 开启开发者选项
+## 4. Enable Developer Options
 
-不同品牌入口不一样，但通常流程是：
+The exact menu path depends on the OEM, but the common flow is:
 
-1. 打开系统“设置”
-2. 进入“关于手机”
-3. 连续点击“版本号 / Build number”多次
-4. 系统提示“您已处于开发者模式”
-5. 回到设置，进入“开发者选项”
+1. Open system **Settings**
+2. Open **About phone**
+3. Tap **Build number / Version number** multiple times
+4. Confirm the system message that developer mode is enabled
+5. Go back and open **Developer options**
 
-后面至少要开启：
+At minimum, enable:
 
-- `USB 调试`
-- `开发者选项`
+- `USB debugging`
+- `Developer options`
 
-如果你的设备是 Android 11 及以上，还需要开启：
+If the device runs Android 11 or newer, also enable:
 
-- `无线调试`
+- `Wireless debugging`
 
-## Shizuku 启动方式
+## Shizuku Startup Methods
 
-Shizuku 支持三种方式：
+Shizuku can be started in three ways:
 
-1. **root 启动**
-2. **Android 11+：无线调试启动**
-3. **Android 10 及以下：连接电脑通过 ADB 启动**
+1. **Root**
+2. **Android 11+ via wireless debugging**
+3. **Android 10 and below via ADB from a computer**
 
-### 方式 A：root 设备
+### Method A: Rooted Device
 
-如果设备已经 root：
+If the device is already rooted:
 
-1. 打开 Shizuku
-2. 选择 root 启动
-3. 启动成功后再打开 ClawGUI
+1. Open Shizuku
+2. Choose the root startup option
+3. Start the service
+4. Open ClawGUI after Shizuku is active
 
-这是最省事的一种方式。
+This is the simplest path.
 
-### 方式 B：Android 11 及以上，通过无线调试启动
+### Method B: Android 11+ via Wireless Debugging
 
-这是推荐给大多数用户的方式。
+This is the recommended path for most non-root users.
 
-#### 第一次配对
+#### First-time pairing
 
-1. 打开系统 `开发者选项`
-2. 打开 `USB 调试`
-3. 打开 `无线调试`
-4. 打开 Shizuku，选择通过无线调试启动
-5. 在 Shizuku 中点击开始配对
-6. 回到系统 `无线调试`
-7. 点击 `使用配对码配对设备`
-8. 把系统显示的配对码填进 Shizuku
+1. Open **Developer options**
+2. Enable `USB debugging`
+3. Enable `Wireless debugging`
+4. Open Shizuku and choose the wireless debugging startup mode
+5. In Shizuku, start the pairing process
+6. Return to system `Wireless debugging`
+7. Tap `Pair device with pairing code`
+8. Enter the code shown by the system into Shizuku
 
-配对通常只需要做一次。
+Pairing usually only needs to be done once.
 
-#### 每次开机后的启动
+#### Starting after reboot
 
-配对完成后，后面每次手机重启，一般只需要：
+After the initial pairing, each reboot usually only requires:
 
-1. 打开 Shizuku
-2. 确认 `无线调试` 仍然开启
-3. 点击启动
+1. Open Shizuku
+2. Confirm `Wireless debugging` is still enabled
+3. Start the service
 
-如果没有成功：
+If startup fails:
 
-1. 先关闭一次 `无线调试`
-2. 再重新开启
-3. 回到 Shizuku 再试
+1. Disable `Wireless debugging`
+2. Re-enable it
+3. Return to Shizuku and try again
 
-#### 需要注意
+#### Notes
 
-- 由于 Android 系统限制，**非 root 方式下，Shizuku 重启后通常需要重新启动一次**
-- 一些厂商系统会限制后台运行，导致 Shizuku 搜不到配对服务或自动掉线
-- 如果是 MIUI / HyperOS / ColorOS / Flyme 这类系统，通常还要额外放开后台运行或关闭某些开发者选项限制
+- On non-root devices, **Shizuku usually needs to be started again after a reboot**
+- Some OEM systems aggressively restrict background processes, which can break pairing discovery or cause disconnections
+- On MIUI / HyperOS / ColorOS / Flyme class systems, you may also need to allow background activity for Shizuku
 
-### 方式 C：Android 10 及以下，通过电脑 ADB 启动
+### Method C: Android 10 and Below via ADB from a Computer
 
-Android 10 及以下没有系统级“无线调试”能力，因此**不能按 Android 11+ 的方法直接在手机上完成无线配对**。这类设备最稳妥的方法是通过电脑执行一次 ADB 命令启动 Shizuku。
+Android 10 and below do **not** provide the Android 11 system-level wireless debugging flow. In practice, the stable approach is to connect the phone to a computer and run one ADB command to start Shizuku.
 
-#### 准备电脑 ADB
+#### Prepare ADB on the computer
 
-1. 在电脑上下载 Google 的 Android SDK Platform Tools
-2. 解压到任意目录
-3. 打开这个目录对应的终端
-4. 先执行：
+1. Download Google Android SDK Platform Tools
+2. Extract it to any directory
+3. Open a terminal in that directory
+4. Run:
 
 ```bash
 adb
 ```
 
-如果终端能输出帮助信息，说明 ADB 可用。
+If you see the help output, ADB is available.
 
-#### 连接手机
+#### Connect the phone
 
-1. 在手机里开启 `开发者选项`
-2. 开启 `USB 调试`
-3. 用数据线把手机连接到电脑
-4. 在电脑执行：
-
-```bash
-adb devices
-```
-
-5. 手机会弹出“是否允许 USB 调试”
-6. 勾选“始终允许”，点击确认
-7. 再执行一次：
+1. Enable `Developer options` on the phone
+2. Enable `USB debugging`
+3. Connect the phone to the computer with a USB cable
+4. On the computer, run:
 
 ```bash
 adb devices
 ```
 
-如果看到：
+5. Accept the `Allow USB debugging` prompt on the phone
+6. Optionally check `Always allow`
+7. Run again:
+
+```bash
+adb devices
+```
+
+If you see:
 
 ```text
 List of devices attached
 XXXX	device
 ```
 
-说明连接成功。
+the connection is working.
 
-#### 启动 Shizuku
+#### Start Shizuku
 
-在电脑终端执行：
+Run:
 
 ```bash
 adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh
 ```
 
-执行完成后：
+Then:
 
-1. 回到手机打开 Shizuku
-2. 确认 Shizuku 显示为已启动
-3. 再打开 ClawGUI
+1. Return to the phone
+2. Open Shizuku
+3. Confirm the service is active
+4. Open ClawGUI
 
-#### 需要注意
+#### Notes
 
-- 这种方法 **每次手机重启后都需要重新执行一次**
-- Android 10 及以下设备没有 Android 11 的原生无线调试能力，所以不能完全替代电脑
-- 如果你的设备厂商对 ADB 做了限制，可能还需要在开发者选项里额外放开安全调试相关开关
+- This method usually needs to be repeated after every reboot
+- Android 10 and below cannot use the Android 11 wireless debugging pairing flow
+- Some OEM builds may require additional debugging-related switches in Developer options
 
-## ClawGUI 首次配置
+## First-Time ClawGUI Configuration
 
-当 Shizuku 正常运行后，再配置 ClawGUI。
+Once Shizuku is active, finish the app setup.
 
-### 1. 首次授权
+### 1. Initial authorization
 
-打开 ClawGUI 后，按照引导完成：
+Open ClawGUI and complete:
 
-1. Shizuku 授权
-2. 悬浮窗权限
-3. 如果要提升输入稳定性，可启用 `ClawGUI 输入法`
+1. Shizuku authorization
+2. Overlay permission
+3. Optional `ClawGUI IME` enablement for more reliable text input
 
-### 2. 模型与 Provider 配置
+### 2. Model and provider configuration
 
-进入设置页，至少配置以下内容：
+In Settings, configure at least:
 
 - Brain provider
 - Brain model
 - VLM provider
 - VLM model
-- API Key
-- 如有需要，配置 API Base URL
+- API key
+- API base URL if your provider requires it
 
-如果你不确定怎么配，最简单的思路是：
+If you are unsure where to start:
 
-- Brain：一个常规对话模型
-- VLM：一个已经适配过的 GUI 模型
+- Brain: a normal chat / reasoning model
+- VLM: a GUI-oriented vision-language model that the project already supports well
 
-### 3. 输入法配置
+### 3. IME configuration
 
-为了让 Agent 更稳定地在输入框中输入文本，建议启用内置输入法：
+For more reliable text entry, enable the built-in IME:
 
-1. 进入 `设置 -> ClawGUI 输入法`
-2. 按页面提示启用输入法
-3. 尽量设为默认输入法
+1. Open `Settings -> ClawGUI IME`
+2. Enable the IME as instructed
+3. Prefer setting it as the default IME
 
-如果不启用，某些输入动作会退回到兼容路径，稳定性可能下降。
+If you skip this, some input actions will fall back to a compatibility path with lower reliability.
 
-### 4. 第一次测试
+### 4. First validation
 
-建议先用简单指令测试：
+Test with simple commands first:
 
-- `打开微信`
-- `打开设置`
-- `返回桌面`
+- `Open WeChat`
+- `Open Settings`
+- `Go back to home screen`
 
-确认以下链路都正常：
+Verify:
 
-- 模型能返回
-- 悬浮球会显示运行状态
-- Agent 能执行点击 / 返回 / 打开应用
+- The model returns normally
+- The floating overlay shows the running state
+- The agent can open apps and perform basic navigation
 
-## 推荐使用流程
+## Recommended Onboarding Sequence
 
-第一次使用推荐按这个顺序操作：
+1. Install Shizuku and ClawGUI
+2. Enable Developer options
+3. Start Shizuku using the method for your Android version
+4. Open ClawGUI and finish the first-run permissions
+5. Configure the API key, providers, and models
+6. Validate with a simple GUI instruction
+7. Only then move on to more complex multi-step tasks
 
-1. 安装 Shizuku 和 ClawGUI
-2. 启用开发者选项
-3. 按你的系统版本启动 Shizuku
-4. 打开 ClawGUI 完成首次授权
-5. 去设置页填 API Key、provider、model
-6. 测试一个简单的 GUI 指令
-7. 再尝试更复杂的多步任务
+## Common Issues
 
-## 常见问题
+### Why does it stop working after reboot?
 
-### 1. 为什么重启手机后又不能用了？
+Because on non-root devices Shizuku is not a permanent system service. After a reboot, it usually has to be started again.
 
-因为非 root 模式下，Shizuku 不是永久后台服务。手机重启后，通常要重新启动一次 Shizuku。
+### Can Android 10 and below use the same wireless debugging flow as Android 11?
 
-### 2. Android 10 及以下能不能像 Android 11 一样无线调试？
+No. Android 11 introduced the system-level wireless debugging pairing flow. Android 10 and below generally still require a computer with ADB.
 
-不能。Android 11 的“无线调试”是系统层新能力。Android 10 及以下通常还是要借助电脑 ADB。
+### Why does Shizuku keep searching for the pairing service?
 
-### 3. 为什么 Shizuku 一直在搜索配对服务？
+Common causes:
 
-通常是因为系统限制了后台运行、局域网访问或无线调试状态异常。优先尝试：
+1. The OEM system restricts background activity
+2. Wireless debugging is in a bad state
+3. Developer options or USB debugging was disabled
 
-1. 给 Shizuku 允许后台运行
-2. 关闭再重新打开无线调试
-3. 保持开发者选项和 USB 调试不要关闭
+Try:
 
-### 4. 为什么 Agent 能回复但不会操作手机？
+1. Allow background activity for Shizuku
+2. Disable and re-enable wireless debugging
+3. Keep Developer options and USB debugging enabled
 
-一般说明：
+### Why can the agent reply but not operate the phone?
 
-- Shizuku 没启动
-- Shizuku 没授权给 ClawGUI
-- VLM 没配好
-- 当前模型不适合做 GUI 动作规划
+Usually one of the following:
 
----
-
-## 相关文档
-
-- [README.md](README.md)：项目概览、能力、架构、技术栈
-- [docs/feishu-setup.md](docs/feishu-setup.md)：飞书机器人接入步骤
-- [docs/diagnostics.md](docs/diagnostics.md)：诊断日志开关与导出方式
-- [docs/architecture-notes.md](docs/architecture-notes.md)：核心模块设计要点
+- Shizuku is not running
+- ClawGUI was not granted Shizuku access
+- The VLM is not configured correctly
+- The selected model is not suitable for GUI action planning
