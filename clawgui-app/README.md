@@ -1,16 +1,16 @@
-# ClawGUI-APP
+<div align="center">
 
-[中文安装指南](SETUP.md) | [English Setup Guide](SETUP_EN.md)
+<h1>ClawGUI-app</h1>
 
-*ClawGUI-APP is the on-device Android deployment module of ClawGUI, corresponding to the "deploy ClawGUI-Agent on a real phone" track in the main roadmap.*
+[![Android](https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white)](https://www.android.com/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-green)](LICENSE)
+[![Shizuku](https://img.shields.io/badge/Shizuku-required-orange)](https://github.com/RikkaApps/Shizuku)
 
-<p>
-  <img src="https://img.shields.io/badge/Android-8.0%2B-3DDC84?logo=android&logoColor=white" alt="Android 8.0+">
-  <img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License">
-  <img src="https://img.shields.io/badge/Shizuku-required-orange" alt="Shizuku required">
-</p>
+[English](README.md) | [中文](README_zh.md)
 
-**ClawGUI-APP** runs the full ClawGUI "brain + GUI agent" stack directly on one Android phone. It removes the old split architecture where a desktop host orchestrates tasks and the phone only executes them. The app is built on top of [Shizuku](https://github.com/RikkaApps/Shizuku) for high-privilege, non-root device control. Two agents cooperate:
+</div>
+
+**ClawGUI-app** is the on-device Android deployment module of [ClawGUI](../README.md), corresponding to the "deploy ClawGUI-Agent on a real phone" track in the main roadmap. It runs the full ClawGUI "brain + GUI agent" stack directly on one Android phone, removing the old split architecture where a desktop host orchestrates tasks and the phone only executes them. The app is built on top of [Shizuku](https://github.com/RikkaApps/Shizuku) for high-privilege, non-root device control. Two agents cooperate:
 
 - **brain**: a function-calling LLM that understands intent, selects tools, and manages sessions and memory
 - **phone agent**: a VLM-driven executor that inspects the screen and performs tap / swipe / type actions
@@ -26,24 +26,19 @@ On the product side, execution status is exposed through a floating overlay, tex
 
 ## 🚀 Quick Start
 
-ClawGUI-APP requires several permissions and system integrations, including Shizuku, overlay permission, and IME setup. Use the setup guide for the full process:
+ClawGUI requires several permissions and system integrations, including Shizuku, overlay permission, and IME setup. The shortest path:
 
-- [English Setup Guide](SETUP_EN.md)
-- [中文安装指南](SETUP.md)
-
-Shortest path:
-
-1. Install [Shizuku](https://github.com/RikkaApps/Shizuku) and the ClawGUI-APP APK
+1. Install [Shizuku](https://github.com/RikkaApps/Shizuku) and the ClawGUI APK
 2. Start Shizuku using the method that matches your Android version
-3. Open ClawGUI-APP and complete Shizuku authorization, overlay permission, and optional IME setup
+3. Open ClawGUI and complete Shizuku authorization, overlay permission, and optional IME setup
 4. Configure your brain / VLM provider and API key in Settings
 5. Validate the setup with simple commands such as `Open WeChat` or `Go back to home screen`
 
-Developer environment requirements, APK build steps, Shizuku startup methods for different Android versions, and troubleshooting are documented in [SETUP_EN.md](SETUP_EN.md).
+Developer environment requirements, APK build steps, Shizuku startup methods for different Android versions, and troubleshooting are documented in [SETUP.md](SETUP.md).
 
 ## 🏗️ Architecture
 
-ClawGUI-APP uses two agents:
+ClawGUI-app uses two agents:
 
 - **nanobot / brain** (`core/nano/`)
   - A function-calling LLM
@@ -111,12 +106,11 @@ User / Feishu message
 
 ## 📖 Documentation
 
-- [SETUP_EN.md](SETUP_EN.md): installation, Shizuku startup, first-run configuration, troubleshooting
-- [docs/architecture-notes.md](docs/architecture-notes.md): architecture notes for modifying the core nanobot layer
+- [SETUP.md](SETUP.md): installation, Shizuku startup, first-run configuration, troubleshooting
 
 ## 🙏 Acknowledgements
 
-ClawGUI-APP builds on top of the following open-source projects:
+ClawGUI-app builds on top of the following open-source projects:
 
 - [**Shizuku**](https://github.com/RikkaApps/Shizuku): high-privilege device control without root
 - [**roubao**](https://github.com/Turbo1123/roubao): partial reference for Android / Shizuku integration under the MIT license
